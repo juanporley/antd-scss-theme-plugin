@@ -8,7 +8,7 @@ import AntdScssThemePlugin from '../src/index';
 import { compileThemeVariables } from '../src/utils';
 
 describe('themeImporter', () => {
-	it('produces an importer that allows importing compiled antd variables', async done => {
+	it('produces an importer that allows importing compiled antd variables', async (done) => {
 		const themePath = path.resolve(__dirname, 'data/theme.scss');
 		const contents = await compileThemeVariables(themePath);
 		sass.render(
@@ -49,7 +49,7 @@ describe('overloadSassLoaderOptions', () => {
 			});
 
 			expect(overloadedOptions.sassOptions.importer.length).toBe(2);
-			overloadedOptions.sassOptions.importer.forEach(imp => expect(typeof imp).toBe('function'));
+			overloadedOptions.sassOptions.importer.forEach((imp) => expect(typeof imp).toBe('function'));
 		});
 	});
 
@@ -60,9 +60,9 @@ describe('overloadSassLoaderOptions', () => {
 		expect(typeof overloadedOptions.sassOptions.importer).toBe('function');
 	});
 
-	it('throws error when no scss theme path is supplied', done => {
+	it('throws error when no scss theme path is supplied', (done) => {
 		AntdScssThemePlugin.SCSS_THEME_PATH = null;
-		overloadSassLoaderOptions({}).catch(error => {
+		overloadSassLoaderOptions({}).catch((error) => {
 			expect(error.message).toMatch(/scss theme file must be specified/i);
 			done();
 		});
@@ -72,14 +72,14 @@ describe('overloadSassLoaderOptions', () => {
 describe('antdSassLoader', () => {
 	const outputPath = path.join(__dirname, 'output');
 	afterAll(() => {
-		rimraf(outputPath, error => {
+		rimraf(outputPath, (error) => {
 			if (error) {
 				throw error;
 			}
 		});
 	});
 
-	it('enables importing theme variables in scss processed with sass-loader', done => {
+	it('enables importing theme variables in scss processed with sass-loader', (done) => {
 		const config = {
 			entry: path.resolve(__dirname, 'data/test.scss'),
 			output: {

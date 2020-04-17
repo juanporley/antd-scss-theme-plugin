@@ -9,7 +9,7 @@ describe('overloadLessLoaderOptions', () => {
 		});
 		expect(overloadedOptions.modifyVars).toEqual({
 			'@primary-color': '#f00',
-			'@info-color': '#200',
+			// '@info-color': '#200',
 		});
 	});
 
@@ -22,7 +22,7 @@ describe('overloadLessLoaderOptions', () => {
 		});
 		expect(overloadedOptions.modifyVars).toEqual({
 			'@primary-color': '#fff',
-			'@info-color': '#200',
+			// '@info-color': '#200',
 		});
 	});
 });

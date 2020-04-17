@@ -33,7 +33,7 @@ export const themeImporter = (themeScssPath, contents) => (url, previousResolve,
  * @param {Object} options - Options for sass-loader.
  * @return {Object} Options modified to includ a custom importer that handles the SCSS theme file.
  */
-export const overloadSassLoaderOptions = async options => {
+export const overloadSassLoaderOptions = async (options) => {
 	const newOptions = { ...options };
 	const scssThemePath = getScssThemePath(options);
 
@@ -70,7 +70,7 @@ export default function antdSassLoader(...args) {
 	const newLoaderContext = { ...loaderContext };
 
 	overloadSassLoaderOptions(options)
-		.then(newOptions => {
+		.then((newOptions) => {
 			delete newOptions.scssThemePath; // eslint-disable-line no-param-reassign
 			newLoaderContext.query = newOptions;
 
@@ -79,7 +79,7 @@ export default function antdSassLoader(...args) {
 
 			return sassLoader.call(newLoaderContext, ...args);
 		})
-		.catch(error => {
+		.catch((error) => {
 			// Remove unhelpful stack from error.
 			error.stack = undefined; // eslint-disable-line no-param-reassign
 			callback(error);

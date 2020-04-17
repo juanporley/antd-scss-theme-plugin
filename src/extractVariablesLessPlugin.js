@@ -48,7 +48,7 @@ class Visitor {
 		//   var-name: @var-name;
 		// }
 		const variables = root.variables();
-		const rules = Object.keys(variables).map(variable => `${variable.slice(1)}: ${variable};`);
+		const rules = Object.keys(variables).map((variable) => `${variable.slice(1)}: ${variable};`);
 		const selector = `${SELECTOR}{${rules.join('\n')}}`;
 
 		// Add the fake selector to less.

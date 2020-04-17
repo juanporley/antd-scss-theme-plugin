@@ -6,7 +6,7 @@ import AntdScssThemePlugin from './index';
  * @return {string} Path to SCSS theme file.
  */
 // eslint-disable-next-line import/prefer-default-export
-export const getScssThemePath = options => {
+export const getScssThemePath = (options) => {
 	const scssThemePath = options.scssThemePath || AntdScssThemePlugin.SCSS_THEME_PATH;
 
 	if (!scssThemePath) {

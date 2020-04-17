@@ -1,7 +1,8 @@
 import fs from 'fs';
+import path from 'path';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import less from 'less';
-import scssToJson from 'scss-to-json';
+import lessToJS from 'less-vars-to-js';
 
 import ExtractVariablesPlugin from './extractVariablesLessPlugin';
 
@@ -22,7 +23,7 @@ export const extractLessVariables = (lessEntryPath, variableOverrides = {}) => {
 				modifyVars: variableOverrides,
 				plugins: [
 					new ExtractVariablesPlugin({
-						callback: variables => resolve(variables),
+						callback: (variables) => resolve(variables),
 					}),
 				],
 			});
@@ -37,22 +38,36 @@ export const extractLessVariables = (lessEntryPath, variableOverrides = {}) => {
  * @param {string} themeScssPath - Path to SCSS file containing only SCSS variables.
  * @return {Object} Object of the form { '@variable': 'value' }.
  */
-export const loadScssThemeAsLess = themeScssPath => {
+// export const loadScssThemeAsLess = (themeScssPath) => {
+// 	let rawTheme;
+// 	try {
+// 		rawTheme = scssToJson(themeScssPath);
+// 	} catch (error) {
+// 		throw new Error(
+// 			`Could not compile the SCSS theme file "${themeScssPath}" for the purpose of variable ` +
+// 				'extraction. This is likely because it contains a Sass error.'
+// 		);
+// 	}
+// 	const theme = {};
+// 	Object.keys(rawTheme).forEach((sassVariableName) => {
+// 		const lessVariableName = sassVariableName.replace(/^\$/, '@');
+// 		theme[lessVariableName] = rawTheme[sassVariableName];
+// 	});
+// 	return theme;
+// };
+
+export const loadScssThemeAsLess = (themeScssPath) => {
 	let rawTheme;
 	try {
-		rawTheme = scssToJson(themeScssPath);
+		rawTheme = lessToJS(fs.readFileSync(path.resolve(themeScssPath), 'utf8').replace(/\$/gi, '@'));
 	} catch (error) {
 		throw new Error(
 			`Could not compile the SCSS theme file "${themeScssPath}" for the purpose of variable ` +
 				'extraction. This is likely because it contains a Sass error.'
 		);
 	}
-	const theme = {};
-	Object.keys(rawTheme).forEach(sassVariableName => {
-		const lessVariableName = sassVariableName.replace(/^\$/, '@');
-		theme[lessVariableName] = rawTheme[sassVariableName];
-	});
-	return theme;
+
+	return rawTheme;
 };
 
 /**
@@ -62,11 +77,11 @@ export const loadScssThemeAsLess = themeScssPath => {
  * @return {string} A string representing an SCSS file containing all the theme and color
  *   variables used in Ant Design.
  */
-export const compileThemeVariables = themeScssPath => {
+export const compileThemeVariables = (themeScssPath) => {
 	const themeEntryPath = require.resolve('antd/lib/style/themes/default.less');
 	const variableOverrides = themeScssPath ? loadScssThemeAsLess(themeScssPath) : {};
 
-	return extractLessVariables(themeEntryPath, variableOverrides).then(variables =>
+	return extractLessVariables(themeEntryPath, variableOverrides).then((variables) =>
 		Object.entries(variables)
 			.map(([name, value]) => `$${name}: ${value};\n`)
 			.join('')
