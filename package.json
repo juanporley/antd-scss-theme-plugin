@@ -11,8 +11,9 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/atbtechgit/antd-scss-theme-plugin.git"
-	},
+		"url": "git://github.com/atbtechgit/antd-scss-theme-plugin.git"
+  },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
 	"keywords": [
 		"webpack",
 		"plugin",
