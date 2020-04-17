@@ -1,5 +1,5 @@
 {
-	"name": "@atbtechgit/antd-scss-theme-plugin",
+	"name": "@atbtech/antd-scss-theme-plugin",
 	"description": "A Webpack plugin for customizing Ant Design with SCSS.",
 	"version": "1.2.0",
 	"main": "build/dist/lib/index.js",
@@ -14,7 +14,7 @@
 		"url": "git://github.com/atbtechgit/antd-scss-theme-plugin.git"
 	},
 	"publishConfig": {
-		"registry": "https://npm.pkg.github.com/"
+		"access": "public"
 	},
 	"keywords": [
 		"webpack",
