@@ -15,7 +15,7 @@ export const overloadLessLoaderOptions = (options) => {
 	// const themeModifyVars = lessToJS(fs.readFileSync(path.resolve(scssThemePath), 'utf8').replace(/\$/gi, '@'));
 	const lessOptions = {
 		...options.lessOptions,
-		modifyVars: { ...themeModifyVars, ...(options.lessOptions.modifyVars || {}) },
+		modifyVars: { ...themeModifyVars, ...(options.lessOptions?.modifyVars || {}) },
 	};
 
 	return { ...options, lessOptions };
