@@ -95,9 +95,7 @@ describe('antdSassLoader', () => {
 							AntdScssThemePlugin.themify({
 								loader: 'sass-loader',
 								options: {
-									sassOptions: {
-										scssThemePath: path.resolve(__dirname, 'data/theme.scss'),
-									},
+									scssThemePath: path.resolve(__dirname, 'data/theme.scss'),
 								},
 							}),
 						],

@@ -65,7 +65,7 @@ export const overloadSassLoaderOptions = async (options) => {
 export default function antdSassLoader(...args) {
 	const loaderContext = this;
 	const callback = loaderContext.async();
-	const { sassOptions: options } = getOptions(loaderContext);
+	const options = getOptions(loaderContext);
 
 	const newLoaderContext = { ...loaderContext };
 
