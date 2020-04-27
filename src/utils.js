@@ -78,7 +78,7 @@ export const loadScssThemeAsLess = (themeScssPath) => {
  *   variables used in Ant Design.
  */
 export const compileThemeVariables = (themeScssPath) => {
-	const themeEntryPath = require.resolve('antd/lib/style/themes/default.less');
+	const themeEntryPath = require.resolve('antd/es/style/themes/default.less');
 	const variableOverrides = themeScssPath ? loadScssThemeAsLess(themeScssPath) : {};
 
 	return extractLessVariables(themeEntryPath, variableOverrides).then((variables) =>

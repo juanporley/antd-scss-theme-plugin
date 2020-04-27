@@ -30,7 +30,7 @@ export const overloadLessLoaderOptions = (options) => {
  */
 export default function antdLessLoader(...args) {
 	const loaderContext = this;
-	const options = getOptions(loaderContext);
+	const { lessOptions: options } = getOptions(loaderContext);
 
 	const newLoaderContext = { ...loaderContext };
 	try {
