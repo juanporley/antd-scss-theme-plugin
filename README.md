@@ -17,7 +17,7 @@ The main changes are:
 -   [sass-loader](https://github.com/webpack-contrib/sass-loader) version (8.0.2) compatibility
 -   [less-loader](https://github.com/webpack-contrib/less-loader) version (6.0.0) compatibility
 -   [Webpack resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) compatibility
--   [less-vars-to-js](https://github.com/michaeltaranto/less-vars-to-js) moved to less-vars-to-js from [scss-to-json](https://github.com/ryanbahniuk/scss-to-json), which allows for comments in SCSS files
+-   [less-vars-to-js](https://github.com/michaeltaranto/less-vars-to-js) moved from [scss-to-json](https://github.com/ryanbahniuk/scss-to-json), which allows for comments in SCSS files
 
 `antd-scss-theme-plugin` is a [Webpack plugin](https://webpack.js.org/concepts/plugins/) which allows you to effectively use [Ant Design](https://ant.design/) in a project with SCSS styling.
 With it you can:
