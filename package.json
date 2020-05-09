@@ -1,5 +1,5 @@
 {
-	"name": "@atbtech/antd-scss-theme-plugin",
+	"name": "@codewaseem/antd-scss-theme-plugin",
 	"description": "A Webpack plugin for customizing Ant Design with SCSS.",
 	"version": "1.3.6",
 	"main": "build/dist/lib/index.js",
@@ -11,7 +11,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/atbtechgit/antd-scss-theme-plugin.git"
+		"url": "https://github.com/codewaseem/antd-scss-theme-plugin.git"
 	},
 	"publishConfig": {
 		"access": "public"
