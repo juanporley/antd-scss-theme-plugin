@@ -1,7 +1,9 @@
 import lessLoader from 'less-loader';
 import { getOptions } from 'loader-utils';
+import fs from 'fs';
+import path from 'path';
 import { getScssThemePath } from './loaderUtils';
-import { loadScssThemeAsLess } from './utils';
+// import { loadScssThemeAsLess } from './utils';
 
 /**
  * Modify less-loader's options with variable overrides extracted from the SCSS theme.
@@ -11,11 +13,16 @@ import { loadScssThemeAsLess } from './utils';
 export const overloadLessLoaderOptions = (options) => {
 	const scssThemePath = getScssThemePath(options);
 
-	const themeModifyVars = loadScssThemeAsLess(scssThemePath);
+	// const themeModifyVars = loadScssThemeAsLess(scssThemePath);
+	const themeModifyVars = fs.readFileSync(path.resolve(scssThemePath), 'utf8').replace(/\$/gi, '@');
 	// const themeModifyVars = lessToJS(fs.readFileSync(path.resolve(scssThemePath), 'utf8').replace(/\$/gi, '@'));
 	const lessOptions = {
 		...options.lessOptions,
-		modifyVars: { ...themeModifyVars, ...(options.lessOptions?.modifyVars || {}) },
+		appendData: () => {
+			// loader.addDependency(path.resolve(__dirname, 'path/to/theme.less'));
+
+			return themeModifyVars;
+		},
 	};
 
 	return { ...options, lessOptions };
