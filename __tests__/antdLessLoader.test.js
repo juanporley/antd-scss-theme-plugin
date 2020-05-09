@@ -7,7 +7,7 @@ describe('overloadLessLoaderOptions', () => {
 		const overloadedOptions = overloadLessLoaderOptions({
 			scssThemePath: path.resolve(__dirname, 'data/theme.scss'),
 		});
-		expect(overloadedOptions.lessOptions.appendData()).toMatch(
+		expect(overloadedOptions.lessOptions.appendData).toMatch(
 			`/*\nTest Comments\n*/\n@primary-color: #f00;\n// @info-color: darken(#800, 20%);`
 		);
 	});
