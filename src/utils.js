@@ -46,7 +46,7 @@ export const loadScssThemeAsLess = (themeScssPath) => {
 		const loadedTheme = exporter(options).getArray();
 
 		rawTheme = {};
-		loadedTheme.forEach((x) => (rawTheme[x.name] = x.value));
+		loadedTheme.forEach((x) => (rawTheme[x.name] = x.compiledValue));
 		//rawTheme = scssToJson(themeScssPath);
 	} catch (error) {
 		throw new Error(
