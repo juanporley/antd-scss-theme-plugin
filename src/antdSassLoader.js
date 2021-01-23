@@ -1,7 +1,7 @@
 import { getOptions, urlToRequest } from 'loader-utils';
 import path from 'path';
 import sassLoader from 'sass-loader';
-import importsToResolve from 'sass-loader/dist/importsToResolve';
+import importsToResolve from './importsToResolve';
 
 import { getScssThemePath } from './loaderUtils';
 import { compileThemeVariables } from './utils';
@@ -15,6 +15,7 @@ import { compileThemeVariables } from './utils';
  */
 export const themeImporter = (themeScssPath, contents) => (url, previousResolve, done) => {
 	const request = urlToRequest(url);
+	// const pathsToTry = getPossibleRequests(request);
 	const pathsToTry = importsToResolve(request);
 
 	const baseDirectory = path.dirname(previousResolve);

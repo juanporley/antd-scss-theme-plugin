@@ -1,5 +1,5 @@
-import fs from 'fs';
 import path from 'path';
+import fs from 'fs';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import less from 'less';
 import lessToJS from 'less-vars-to-js';
@@ -42,39 +42,16 @@ export const extractLessVariables = (lessEntryPath, variableOverrides = {}) => {
 export const loadScssThemeAsLess = (themeScssPath) => {
 	let rawTheme;
 	try {
-		const options = { inputFiles: [themeScssPath] };
-		const loadedTheme = exporter(options).getArray();
-
-		rawTheme = {};
-		loadedTheme.forEach((x) => (rawTheme[x.name] = x.compiledValue));
-		//rawTheme = scssToJson(themeScssPath);
+		rawTheme = lessToJS(fs.readFileSync(path.resolve(themeScssPath), 'utf8').replace(/\$/gi, '@'));
 	} catch (error) {
 		throw new Error(
 			`Could not compile the SCSS theme file "${themeScssPath}" for the purpose of variable ` +
 				'extraction. This is likely because it contains a Sass error.'
 		);
 	}
-	const theme = {};
-	Object.keys(rawTheme).forEach((sassVariableName) => {
-		const lessVariableName = sassVariableName.replace(/^\$/, '@');
-		theme[lessVariableName] = rawTheme[sassVariableName];
-	});
-	return theme;
+
+	return rawTheme;
 };
-
-// export const loadScssThemeAsLess = (themeScssPath) => {
-// 	let rawTheme;
-// 	try {
-// 		rawTheme = lessToJS(fs.readFileSync(path.resolve(themeScssPath), 'utf8').replace(/\$/gi, '@'));
-// 	} catch (error) {
-// 		throw new Error(
-// 			`Could not compile the SCSS theme file "${themeScssPath}" for the purpose of variable ` +
-// 				'extraction. This is likely because it contains a Sass error.'
-// 		);
-// 	}
-
-// 	return rawTheme;
-// };
 
 /**
  * Use SCSS theme file to seed a full set of Ant Design's theme variables returned in SCSS.

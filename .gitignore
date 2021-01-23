@@ -2,5 +2,3 @@ __tests__/output
 build
 node_modules
 /.idea
-package-lock.json
-yarn.lock

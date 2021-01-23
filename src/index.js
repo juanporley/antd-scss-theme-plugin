@@ -10,6 +10,7 @@ class AntdScssThemePlugin {
 	 * @param {Object} compiler - A webpack compiler.
 	 * @return {undefined}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	apply(compiler) {
 		const afterEmit = (compilation, callback) => {
 			// Watch the theme file for changes.

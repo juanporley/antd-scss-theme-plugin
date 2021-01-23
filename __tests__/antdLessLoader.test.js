@@ -9,7 +9,6 @@ describe('overloadLessLoaderOptions', () => {
 		});
 		expect(overloadedOptions.lessOptions.modifyVars).toEqual({
 			'@primary-color': '#f00',
-			'@info-color': 'darken(#800, 20%)',
 		});
 	});
 
