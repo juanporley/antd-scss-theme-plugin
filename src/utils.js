@@ -3,7 +3,6 @@ import fs from 'fs';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import less from 'less';
 import lessToJS from 'less-vars-to-js';
-import { exporter } from 'sass-export';
 
 import ExtractVariablesPlugin from './extractVariablesLessPlugin';
 
