@@ -15,13 +15,12 @@ import { compileThemeVariables } from './utils';
  */
 export const themeImporter = (themeScssPath, contents) => (url, previousResolve, done) => {
 	const request = urlToRequest(url);
-	// const pathsToTry = getPossibleRequests(request);
 	const pathsToTry = importsToResolve(request);
 
-	const baseDirectory = path.dirname(previousResolve);
+	// const baseDirectory = path.dirname(previousResolve);
 	for (let i = 0; i < pathsToTry.length; i += 1) {
 		const potentialResolve = pathsToTry[i];
-		if (path.resolve(baseDirectory, potentialResolve) === themeScssPath) {
+		if (path.resolve(potentialResolve) === themeScssPath) {
 			done({ contents });
 			return;
 		}
