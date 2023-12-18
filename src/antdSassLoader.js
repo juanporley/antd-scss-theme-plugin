@@ -1,4 +1,4 @@
-import { getOptions, urlToRequest } from 'loader-utils';
+import { urlToRequest } from 'loader-utils';
 import path from 'path';
 import sassLoader from 'sass-loader';
 import importsToResolve from './importsToResolve';
@@ -15,13 +15,12 @@ import { compileThemeVariables } from './utils';
  */
 export const themeImporter = (themeScssPath, contents) => (url, previousResolve, done) => {
 	const request = urlToRequest(url);
-	// const pathsToTry = getPossibleRequests(request);
 	const pathsToTry = importsToResolve(request);
 
-	const baseDirectory = path.dirname(previousResolve);
+	// const baseDirectory = path.dirname(previousResolve);
 	for (let i = 0; i < pathsToTry.length; i += 1) {
 		const potentialResolve = pathsToTry[i];
-		if (path.resolve(baseDirectory, potentialResolve) === themeScssPath) {
+		if (path.resolve(potentialResolve) === themeScssPath) {
 			done({ contents });
 			return;
 		}
@@ -60,20 +59,27 @@ export const overloadSassLoaderOptions = async (options) => {
 /**
  * A wrapper around sass-loader which overloads loader options to include a custom importer handling
  * variable imports from the SCSS theme file, and registers the theme file as a watched dependency.
+ * We need to override the context's getOptions fn since Webpack's NormalModule.js captures its
+ * context there with arrow function, making it hard for us to tweak the loader's context.
  * @param {...*} args - Arguments passed to sass-loader.
  * @return {undefined}
  */
 export default function antdSassLoader(...args) {
 	const loaderContext = this;
 	const callback = loaderContext.async();
-	const options = getOptions(loaderContext);
+	const options = this.getOptions();
 
-	const newLoaderContext = { ...loaderContext };
+	const newLoaderContext = {
+		...loaderContext,
+		getOptions() {
+			return this.options;
+		},
+	};
 
 	overloadSassLoaderOptions(options)
 		.then((newOptions) => {
 			delete newOptions.scssThemePath; // eslint-disable-line no-param-reassign
-			newLoaderContext.query = newOptions;
+			newLoaderContext.options = newOptions;
 
 			const scssThemePath = getScssThemePath(options);
 			newLoaderContext.addDependency(scssThemePath);

@@ -18,7 +18,7 @@ class AntdScssThemePlugin {
 			if (theme) {
 				if (Array.isArray(compilation.fileDependencies) && !compilation.fileDependencies.includes(theme)) {
 					compilation.fileDependencies.push(theme);
-				} else if (compilation.fileDependencies instanceof Set && !compilation.fileDependencies.has(theme)) {
+				} else if ('has' in compilation.fileDependencies && !compilation.fileDependencies.has(theme)) {
 					compilation.fileDependencies.add(theme);
 				}
 			}
@@ -48,16 +48,12 @@ class AntdScssThemePlugin {
 	static themify(config) {
 		const { loader, options = {} } = typeof config === 'string' ? { loader: config } : config;
 		let overloadedLoader;
-		switch (loader) {
-			case 'sass-loader':
-				overloadedLoader = require.resolve('./antdSassLoader.js');
-				break;
-			case 'less-loader':
-				overloadedLoader = require.resolve('./antdLessLoader.js');
-				break;
-			default:
-				overloadedLoader = loader;
-				break;
+		if (loader.includes('sass-loader')) {
+			overloadedLoader = require.resolve('./antdSassLoader.js');
+		} else if (loader.includes('less-loader')) {
+			overloadedLoader = require.resolve('./antdLessLoader.js');
+		} else {
+			overloadedLoader = loader;
 		}
 
 		return {
